@@ -83,7 +83,7 @@ async def upload_to_gemini(file: UploadFile = File(...), weeklyChargesBand: str 
         """
     )
     
-    # exactWeeklyBandRange =json.loads(response.text.replace("```json\n", "").replace("\n```", "") )["weeklyChargesBand"]
+    exactWeeklyBandRange =json.loads(response.text.replace("```json\n", "").replace("\n```", "") )["weeklyChargesBand"]
 
 
-    return JSONResponse(status_code=200, content={"file_name": uploadedFile.name,"exactWeeklyBandRange": response.text})
+    return JSONResponse(status_code=200, content={"file_name": uploadedFile.name,"exactWeeklyBandRange": exactWeeklyBandRange})
