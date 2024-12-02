@@ -8,7 +8,6 @@ import json
 
 dotenv.load_dotenv()
 
-genai.configure(api_key=os.environ["API_KEY"])
 os.environ["GRPC_VERBOSITY"] = "ERROR"
 os.environ["GLOG_minloglevel"] = "2"
 
@@ -28,14 +27,21 @@ async def upload_to_gemini(file: UploadFile = File(...), weeklyChargesBand: str 
         raise HTTPException(
             status_code=400, detail="File and weeklyChargesBand are required.")
 
-    # if file.content_type != 'application/pdf':
-    #     raise HTTPException(
-    #         status_code=400, detail="Only PDF files are accepted.")
+    if file.content_type != 'application/pdf':
+        raise HTTPException(
+            status_code=400, detail="Only PDF files are accepted.")
 
-    # with open(file.filename, "wb") as f:
-    #     f.write(await file.read())
+    with open(file.filename, "wb") as f:
+        f.write(await file.read())
+        
+    
+    genai.configure(api_key=os.environ["API_KEY"])
 
-    # uploadedFile = genai.upload_file(file.filename, mime_type=file.content_type)
+    uploadedFile = genai.upload_file(file.filename, mime_type=file.content_type)
+    
+    genai.configure(api_key=os.environ["ALTERNATE_API_KEY"])
+    
+    uploadedFile = genai.upload_file(file.filename, mime_type=file.content_type)
     
     uploadedFile = genai.get_file("files/7xfmf0p8cpln")
     chat_session = model.start_chat(history=[
