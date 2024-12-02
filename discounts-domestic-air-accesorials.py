@@ -6,6 +6,7 @@ from fastapi.responses import JSONResponse
 import dotenv
 from pydantic import BaseModel
 import json
+from fastapi.middleware.cors import CORSMiddleware
 
 dotenv.load_dotenv()
 
@@ -14,6 +15,14 @@ os.environ["GRPC_VERBOSITY"] = "ERROR"
 os.environ["GLOG_minloglevel"] = "2"
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Adjust this to the specific origins you want to allow
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 def upload_to_gemini(path, mime_type=None):
