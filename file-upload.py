@@ -39,11 +39,11 @@ async def upload_to_gemini(file: UploadFile = File(...), weeklyChargesBand: str 
         f.write(await file.read())
         
     
-    genai.configure(api_key=os.getenv["API_KEY"])
+    genai.configure(api_key=os.getenv("API_KEY"))
 
     uploadedFile = genai.upload_file(file.filename, mime_type=file.content_type)
     
-    genai.configure(api_key=os.getenv["ALTERNATE_API_KEY"])
+    genai.configure(api_key=os.getenv("ALTERNATE_API_KEY"))
     
     uploadedFile = genai.upload_file(file.filename, mime_type=file.content_type)
     
