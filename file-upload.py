@@ -16,6 +16,10 @@ app = FastAPI()
 
 model = genai.GenerativeModel("gemini-1.5-flash")
 
+@app.get("/")
+async def read_root():
+    return {"message": "Hello World"}
+
 @app.post("/upload-file")
 async def upload_to_gemini(file: UploadFile = File(...), weeklyChargesBand: str = Form(...)):
     """Uploads the given file to Gemini.

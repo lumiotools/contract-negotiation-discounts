@@ -57,6 +57,9 @@ class RequestBody(BaseModel):
   fileName: str
   weeklyChargesBand: str
 
+@app.get("/")
+async def read_root():
+    return {"message": "Hello World"}
 
 @app.post("/discounts-domestic-ground/analyze")
 async def analyze(body: RequestBody):

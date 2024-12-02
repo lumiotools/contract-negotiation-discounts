@@ -67,6 +67,10 @@ modelpro = genai.GenerativeModel("gemini-1.5-pro")
 class RequestBody(BaseModel):
   fileName: str
   weeklyChargesBand: str
+  
+@app.get("/")
+async def read_root():
+    return {"message": "Hello World"}
 
 @app.post("/discounts-domestic-air-accesorials/analyze")
 async def analyze(body: RequestBody):
