@@ -41,18 +41,17 @@ async def upload_to_gemini(file: UploadFile = File(...), weeklyChargesBand: str 
     
     genai.configure(api_key=os.getenv("API_KEY"))
 
-    uploadedFile = genai.upload_file(file.filename, mime_type=file.content_type)
+    uploadedFile1 = genai.upload_file(file.filename, mime_type=file.content_type)
     
     genai.configure(api_key=os.getenv("ALTERNATE_API_KEY"))
     
-    uploadedFile = genai.upload_file(file.filename, mime_type=file.content_type)
+    uploadedFile2 = genai.upload_file(file.filename, mime_type=file.content_type)
     
-    uploadedFile = genai.get_file("files/7xfmf0p8cpln")
     chat_session = model.start_chat(history=[
         {
             "role": "user",
             "parts": [
-                uploadedFile,
+                uploadedFile2,
                 """Use the attached contract to find the table. If there are multiple tables, use the first table. 
 
                 Requirements:
@@ -96,4 +95,4 @@ async def upload_to_gemini(file: UploadFile = File(...), weeklyChargesBand: str 
     exactWeeklyBandRange =json.loads(response.text.replace("```json\n", "").replace("\n```", "") )["weeklyChargesBand"]
 
 
-    return JSONResponse(status_code=200, content={"file_name": uploadedFile.name,"exactWeeklyBandRange": exactWeeklyBandRange})
+    return JSONResponse(status_code=200, content={"file_name_1": uploadedFile1.name,"file_name_2": uploadedFile2.name,"exactWeeklyBandRange": exactWeeklyBandRange})
