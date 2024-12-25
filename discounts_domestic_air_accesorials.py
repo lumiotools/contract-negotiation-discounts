@@ -20,7 +20,7 @@ generation_config = {
 }
 
 model = genai.GenerativeModel("gemini-1.5-flash")
-modelpro = genai.GenerativeModel("gemini-1.5-pro")
+modelpro = genai.GenerativeModel("gemini-2.0-flash-exp")
 
 async def analyze_discounts_domestic_air_accesorials(file, weeklyChargesBand):
 
